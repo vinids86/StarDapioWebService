@@ -1,4 +1,5 @@
 package com.stardapio.webservice.ajax;
+
 import org.codehaus.jettison.json.JSONArray;
 
 import javax.servlet.AsyncContext;

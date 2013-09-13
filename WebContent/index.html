@@ -7,32 +7,22 @@
     <script type="text/javascript" src="http://jquery-json.googlecode.com/files/jquery.json-2.2.min.js"></script>
     <script type="text/javascript">
         jQuery(function($) {
-
-            function processEvents(events) {
-                if (events.length) {
-                    $('#logs').append('<span style="color: blue;">[client] ' + events.length + ' events</span><br/>');
-                } else {
-                    $('#logs').append('<span style="color: red;">[client] no event</span><br/>');
-                }
-                for (var i in events) {
-                    $('#logs').append('<span>[event] ' + events[i] + '</span><br/>');
-                }
-            }
-
-            function long_polling() {
-                $.getJSON('ajax', function(events) {
-                    processEvents(events);
-                    long_polling();
+            setInterval(function() {
+                $('body').append('<span>[client] checking for events...</span><br/>');
+                $.getJSON('events', function(events) {
+                    if(events.length) {
+                        $('body').append('<span style="color: blue;">[client] ' + events.length + ' events</span><br/>');
+                    } else {
+                        $('body').append('<span style="color: red;">[client] no event</span><br/>');
+                    }
+                    for (var i in events) {
+                        $('body').append('<span>[event] ' + events[i] + '</span><br/>');
+                    }
                 });
-            }
-
-            long_polling();
-
+            }, 2000);
         });
     </script>
 </head>
-<body>
-<div id="logs" style="font-family: monospace;">
-</div>
+<body style="font-family: monospace;">
 </body>
 </html>
