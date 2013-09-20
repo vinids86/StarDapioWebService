@@ -335,6 +335,31 @@ public class DAO {
 		}
 	}
 
+	public List<Pedido> getPedidos(long idRestaurant) {
+		String sql = "select * from pedido " + "where id_restaurant = "
+				+ idRestaurant;
+		try {
+			List<Pedido> pedidos = new ArrayList<Pedido>();
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Pedido pedido = new Pedido();
+				pedido.setIdCliente(rs.getLong("id_cliente"));
+				pedido.setIdRestaurant(rs.getLong("id_restaurant"));
+				pedido.addItem(getItem(rs.getLong("item")));
+				pedido.setMesa(rs.getLong("mesa"));
+				pedidos.add(pedido);
+			}
+			rs.close();
+			stmt.close();
+			return pedidos;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+
 	/*
 	 * public void deleteRestaurante(int id) {
 	 * 
