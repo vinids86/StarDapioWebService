@@ -241,8 +241,8 @@ public class DAO {
 
 	public void adicionaPedido(Pedido pedido) {
 		String sql = "insert into pedido "
-				+ "(id_cliente, id_restaurant, item, mesa)"
-				+ "values (?, ?, ?, ?)";
+				+ "(id_cliente, id_restaurant, item, mesa, visualizado)"
+				+ "values (?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
@@ -252,6 +252,7 @@ public class DAO {
 				stmt.setLong(2, pedido.getIdRestaurant());
 				stmt.setInt(3, i.getIdItem());
 				stmt.setLong(4, pedido.getMesa());
+				stmt.setInt(5, 0);
 			}
 
 			stmt.execute();
@@ -337,7 +338,7 @@ public class DAO {
 
 	public List<Pedido> getPedidos(long idRestaurant) {
 		String sql = "select * from pedido " + "where id_restaurant = "
-				+ idRestaurant;
+				+ idRestaurant + " and visualizado = false";
 		try {
 			List<Pedido> pedidos = new ArrayList<Pedido>();
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
@@ -358,6 +359,19 @@ public class DAO {
 			throw new RuntimeException(e);
 		}
 
+	}
+
+	public void setVisualizado(boolean b, long idRestaurant) {
+		String sql = "update pedido set visualizado = true where id_restaurant = " + idRestaurant;
+		
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/*
