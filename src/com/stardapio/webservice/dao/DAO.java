@@ -248,11 +248,11 @@ public class DAO {
 
 			List<Item> itens = pedido.getItens();
 			for (Item i : itens) {
-				stmt.setLong(1, pedido.getIdCliente());
+				stmt.setString(1, pedido.getIdCliente());
 				stmt.setLong(2, pedido.getIdRestaurant());
 				stmt.setInt(3, i.getIdItem());
 				stmt.setLong(4, pedido.getMesa());
-				stmt.setInt(5, 0);
+				stmt.setBoolean(5, false);
 			}
 
 			stmt.execute();
@@ -272,7 +272,7 @@ public class DAO {
 
 			while (rs.next()) {
 				Pedido pedido = new Pedido();
-				pedido.setIdCliente(rs.getLong("id_cliente"));
+				pedido.setIdCliente(rs.getString("id_cliente"));
 				pedido.setIdRestaurant(rs.getLong("id_restaurant"));
 				pedido.addItem(getItem(rs.getLong("item")));
 				pedido.setMesa(rs.getLong("mesa"));
@@ -322,7 +322,7 @@ public class DAO {
 
 			while (rs.next()) {
 				Pedido pedido = new Pedido();
-				pedido.setIdCliente(rs.getLong("id_cliente"));
+				pedido.setIdCliente(rs.getString("id_cliente"));
 				pedido.setIdRestaurant(rs.getLong("id_restaurant"));
 				pedido.addItem(getItem(rs.getLong("item")));
 				pedido.setMesa(rs.getLong("mesa"));
@@ -346,7 +346,7 @@ public class DAO {
 
 			while (rs.next()) {
 				Pedido pedido = new Pedido();
-				pedido.setIdCliente(rs.getLong("id_cliente"));
+				pedido.setIdCliente(rs.getString("id_cliente"));
 				pedido.setIdRestaurant(rs.getLong("id_restaurant"));
 				pedido.addItem(getItem(rs.getLong("item")));
 				pedido.setMesa(rs.getLong("mesa"));

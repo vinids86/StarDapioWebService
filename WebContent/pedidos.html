@@ -8,22 +8,18 @@
     <script type="text/javascript">
     jQuery(function($) {
         setInterval(function() {
-            $('body').append('<span>[client] checking for events...</span><br/>');
             $.getJSON('pedidos', function(events) {
-                if(events.length) {
-                    $('body').append('<span style="color: blue;">[client] ' + events.length + ' events</span><br/>');
-                } else {
-                    $('body').append('<span style="color: red;">[client] no event</span><br/>');
-                }
                 for (var i in events) {
-                    $('body').append('<span>[event] ' + events[i] + '</span><br/>');
+                    $('#cozinha').append('<span style="color: blue;">' + events[i] + '</span><br/>');
                 }
             });
-        }, 2000);
+        }, 6000);
     });
     </script>
 </head>
 <body>
-
+<div id="cozinha"></div>
+<div id="garcom"></div>
+<div id="caixa"></div>
 </body>
 </html>

@@ -2,20 +2,29 @@ package com.stardapio.webservice.bean;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Pedido {
 	private List<Item> itens;
-	private long idCliente;
+	private String idCliente;
 	private long mesa;
 	private long idRestaurant;
-	
+
 	public Pedido() {
 		itens = new ArrayList<Item>();
 	}
-	
+
+	public Pedido(String idCliente, long idRestaurante, String mesa) {
+		this.idCliente = idCliente;
+		this.idRestaurant = idRestaurante;
+		this.mesa = Long.parseLong(mesa);
+	}
+
+	public void deletePedido(Item pedido) {
+		itens.remove(pedido);
+	}
+
 	public void addItem(Item item) {
 		itens.add(item);
 	}
@@ -28,11 +37,11 @@ public class Pedido {
 		this.itens = itens;
 	}
 
-	public long getIdCliente() {
+	public String getIdCliente() {
 		return idCliente;
 	}
 
-	public void setIdCliente(long idCliente) {
+	public void setIdCliente(String idCliente) {
 		this.idCliente = idCliente;
 	}
 
@@ -50,5 +59,10 @@ public class Pedido {
 
 	public void setIdRestaurant(long idRestaurant) {
 		this.idRestaurant = idRestaurant;
+	}
+	
+	@Override
+	public String toString() {
+		return itens.toString();
 	}
 }
