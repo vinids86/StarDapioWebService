@@ -22,17 +22,20 @@ li {
 }
 </style>
 <script>
-	$(function() {
-		$("#col1 li, #col2 li").draggable({
+$(function() {
+	 dragdropinit();
+});
+function dragdropinit (){
+		$("#cozinha li, #garcom li").draggable({
 			revert : "invalid",
 			containment : "document",
 			helper : "clone",
 			cursor : "crosshair"
 		});
-		$("#col2 ol").droppable({
+		$("#garcom ol").droppable({
 			activeClass : "ui-state-default",
 			hoverClass : "ui-state-hover",
-			accept : "#col1 li",
+			accept : "#cozinha li",
 			greedy : true,
 			drop : function(event, ui) {
 				$(this).find(".placeholder").remove();
@@ -45,10 +48,10 @@ li {
 				$(this).removeClass("ui-state-default");
 			}
 		});
-		$("#col3 ol").droppable({
+		$("#caixa ol").droppable({
 			activeClass : "ui-state-default",
 			hoverClass : "ui-state-hover",
-			accept : "#col2 li",
+			accept : "#garcom li",
 			greedy : true,
 			drop : function(event, ui) {
 				$(this).find(".placeholder").remove();
@@ -61,20 +64,18 @@ li {
 				$(this).removeClass("ui-state-default");
 			}
 		});
-	});
+	}
 </script>
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-<script type="text/javascript"
-	src="http://jquery-json.googlecode.com/files/jquery.json-2.2.min.js"></script>
+
 <script type="text/javascript">
 	jQuery(function($) {
 		setInterval(function() {
+			dragdropinit();
 			$.getJSON('pedidos', function(events) {
 				for ( var i in events) {
-					$('#cozinha').append(
-							'<span style="color: blue;">' + events[i]
-									+ '</span><br/>');
+					$('#cozinha ol').append(
+							'<li class="ui-state-highlight">' + events[i]
+									+ '</li>');
 				}
 			});
 		}, 6000);
@@ -82,21 +83,17 @@ li {
 </script>
 </head>
 <body>
-	<div id="col1">
+	<div id="cozinha">
 		<ol style="float: left; width: 30%">
-			<li class="ui-state-highlight">Col3 1</li>
-			<li class="ui-state-highlight">Col3 2</li>
-			<li class="ui-state-highlight">Col3 3</li>
-			<li class="ui-state-highlight">Col3 4</li>
-			<li class="ui-state-highlight">Col3 5</li>
+			<li class="ui-state-highlight">Aguarde Pedido</li>
 		</ol>
 	</div>
-	<div id="col2">
+	<div id="garcom">
 		<ol style="float: left; width: 30%">
 			<li class="placeholder">Adicione Aqui</li>
 		</ol>
 	</div>
-	<div id="col3">
+	<div id="caixa">
 		<ol style="float: left; width: 30%" class="sortable-class">
 			<li class="placeholder">Adicione Aqui</li>
 		</ol>
