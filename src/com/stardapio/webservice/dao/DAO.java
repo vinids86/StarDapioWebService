@@ -254,7 +254,7 @@ public class DAO {
 				stmt.setLong(4, pedido.getMesa());
 				stmt.setBoolean(5, false);
 			}
-
+			// Por execute dentro do laço
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
@@ -362,8 +362,9 @@ public class DAO {
 	}
 
 	public void setVisualizado(boolean b, long idRestaurant) {
-		String sql = "update pedido set visualizado = true where id_restaurant = " + idRestaurant;
-		
+		String sql = "update pedido set visualizado = true where id_restaurant = "
+				+ idRestaurant;
+
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
