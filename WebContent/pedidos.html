@@ -30,7 +30,8 @@ function dragdropinit (){
 			revert : "invalid",
 			containment : "document",
 			helper : "clone",
-			cursor : "crosshair"
+			cursor : "crosshair",
+			cancel : ".placeholder"
 		});
 		$("#garcom ol").droppable({
 			activeClass : "ui-state-default",
@@ -38,8 +39,8 @@ function dragdropinit (){
 			accept : "#cozinha li",
 			greedy : true,
 			drop : function(event, ui) {
-				$(this).find(".placeholder").remove();
-				$("<li></li>").text(ui.draggable.text()).appendTo(this);
+				
+				$('<li class="ui-state-highlight"></li>').text(ui.draggable.text()).appendTo(this);
 				ui.draggable.remove();
 			}
 		}).sortable({
@@ -54,8 +55,8 @@ function dragdropinit (){
 			accept : "#garcom li",
 			greedy : true,
 			drop : function(event, ui) {
-				$(this).find(".placeholder").remove();
-				$("<li></li>").text(ui.draggable.text()).appendTo(this);
+				
+				$('<li class="ui-state-highlight"></li>').text(ui.draggable.text()).appendTo(this);
 				ui.draggable.remove();
 			}
 		}).sortable({
@@ -85,17 +86,17 @@ function dragdropinit (){
 <body>
 	<div id="cozinha">
 		<ol style="float: left; width: 30%">
-			<li class="ui-state-highlight">Aguarde Pedido</li>
+			<ins class="placeholder">Fila Cozinha</ins>
 		</ol>
 	</div>
 	<div id="garcom">
 		<ol style="float: left; width: 30%">
-			<li class="placeholder">Adicione Aqui</li>
+			<ins class="placeholder">Fila Garçom</ins>
 		</ol>
 	</div>
 	<div id="caixa">
 		<ol style="float: left; width: 30%" class="sortable-class">
-			<li class="placeholder">Adicione Aqui</li>
+			<ins class="placeholder">Fila Caixa</ins>
 		</ol>
 	</div>
 </body>
