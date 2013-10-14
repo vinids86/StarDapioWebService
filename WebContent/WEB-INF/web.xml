@@ -39,6 +39,16 @@
 		<url-pattern>/pedidos</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>pedido</servlet-name>
+		<servlet-class>com.stardapio.webservice.ajax.MainPedidosServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>pedido</servlet-name>
+		<url-pattern>/pedido</url-pattern>
+	</servlet-mapping>
+
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>

@@ -6,10 +6,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Pedido {
+	private long idPedido;
 	private List<Item> itens;
 	private String idCliente;
 	private long mesa;
 	private long idRestaurant;
+	private boolean visualizado;
 
 	public Pedido() {
 		itens = new ArrayList<Item>();
@@ -23,6 +25,14 @@ public class Pedido {
 
 	public void deletePedido(Item pedido) {
 		itens.remove(pedido);
+	}
+
+	public long getIdPedido() {
+		return idPedido;
+	}
+
+	public void setIdPedido(long idPedido) {
+		this.idPedido = idPedido;
 	}
 
 	public void addItem(Item item) {
@@ -60,9 +70,27 @@ public class Pedido {
 	public void setIdRestaurant(long idRestaurant) {
 		this.idRestaurant = idRestaurant;
 	}
-	
+
+	public boolean isVisualizado() {
+		return visualizado;
+	}
+
+	public void setVisualizado(boolean visualizado) {
+		this.visualizado = visualizado;
+	}
+
 	@Override
 	public String toString() {
 		return itens.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if ((obj instanceof Pedido)
+				&& (((Pedido) obj).getIdPedido() == this.idPedido)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
