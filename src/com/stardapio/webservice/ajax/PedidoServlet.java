@@ -2,7 +2,9 @@ package com.stardapio.webservice.ajax;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,28 +28,31 @@ public class PedidoServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
 		HttpSession session = req.getSession();
 		// long idRestaurant = (Long) session.getAttribute("idRestaurant");
 		long idRestaurant = 1;
-		List<Pedido> pedidosSession;
-		if(session.getAttribute("pedidos") != null) {
-		 pedidosSession = (List<Pedido>) session
-				.getAttribute("pedidos");
-		} else {
-			pedidosSession = new ArrayList<Pedido>();
-		}
-		List<Pedido> pedidosBanco = new PedidoModel().getPedidos(idRestaurant);
-		List<Pedido> pedidosNovos = new ArrayList<Pedido>();
-		
-		for(Pedido p : pedidosBanco) {
-			p.setVisualizado(true);
-		}
+		Set<Pedido> pedidosSession;
 
-		for (Pedido p : pedidosBanco) {
-			if ( (!pedidosSession.contains(p)) ) {
+		pedidosSession = (Set<Pedido>) session.getAttribute("pedidos");
+
+		Set<Pedido> pedidosBanco = new PedidoModel().getPedidos(idRestaurant);
+		Set<Pedido> pedidosNovos = new HashSet<Pedido>();
+		
+		/*for (Pedido p : pedidosBanco) {
+			if ((!pedidosSession.contains(p)) && (!p.isVisualizado())) {
 				p.setVisualizado(true);
 				pedidosSession.add(p);
 				pedidosNovos.add(p);
+			}
+		}*/
+		
+		
+		
+		for(Pedido p : pedidosBanco) {
+			if((pedidosSession.add(p)) ) {
+				pedidosNovos.add(p);
+				p.setVisualizado(true);
 			}
 		}
 

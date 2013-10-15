@@ -5,9 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import com.google.gson.JsonElement;
 import com.stardapio.webservice.bean.ContainerTypeAndSubType;
 import com.stardapio.webservice.bean.Item;
 import com.stardapio.webservice.bean.Pedido;
@@ -336,11 +337,11 @@ public class DAO {
 		}
 	}
 
-	public List<Pedido> getPedidos(long idRestaurant) {
+	public Set<Pedido> getPedidos(long idRestaurant) {
 		String sql = "select * from pedido " + "where id_restaurant = "
 				+ idRestaurant + " and visualizado = false";
 		try {
-			List<Pedido> pedidos = new ArrayList<Pedido>();
+			Set<Pedido> pedidos = new HashSet<Pedido>();
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 

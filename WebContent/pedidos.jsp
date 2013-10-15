@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <title>Pedidos</title>
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
@@ -22,10 +23,10 @@ li {
 }
 </style>
 <script>
-$(function() {
-	 dragdropinit();
-});
-function dragdropinit (){
+	$(function() {
+		dragdropinit();
+	});
+	function dragdropinit() {
 		$("#cozinha li, #garcom li").draggable({
 			revert : "invalid",
 			containment : "document",
@@ -33,33 +34,37 @@ function dragdropinit (){
 			cursor : "crosshair",
 			cancel : ".placeholder"
 		});
-		$("#garcom ol").droppable({
-			activeClass : "ui-state-default",
-			hoverClass : "ui-state-hover",
-			accept : "#cozinha li",
-			greedy : true,
-			drop : function(event, ui) {
-				
-				$('<li class="ui-state-highlight"></li>').text(ui.draggable.text()).appendTo(this);
-				ui.draggable.remove();
-			}
-		}).sortable({
+		$("#garcom ol").droppable(
+				{
+					activeClass : "ui-state-default",
+					hoverClass : "ui-state-hover",
+					accept : "#cozinha li",
+					greedy : true,
+					drop : function(event, ui) {
+
+						$('<li class="ui-state-highlight"></li>').text(
+								ui.draggable.text()).appendTo(this);
+						ui.draggable.remove();
+					}
+				}).sortable({
 			items : "li:not(.placeholder)",
 			sort : function() {
 				$(this).removeClass("ui-state-default");
 			}
 		});
-		$("#caixa ol").droppable({
-			activeClass : "ui-state-default",
-			hoverClass : "ui-state-hover",
-			accept : "#garcom li",
-			greedy : true,
-			drop : function(event, ui) {
-				
-				$('<li class="ui-state-highlight"></li>').text(ui.draggable.text()).appendTo(this);
-				ui.draggable.remove();
-			}
-		}).sortable({
+		$("#caixa ol").droppable(
+				{
+					activeClass : "ui-state-default",
+					hoverClass : "ui-state-hover",
+					accept : "#garcom li",
+					greedy : true,
+					drop : function(event, ui) {
+
+						$('<li class="ui-state-highlight"></li>').text(
+								ui.draggable.text()).appendTo(this);
+						ui.draggable.remove();
+					}
+				}).sortable({
 			items : "li:not(.placeholder)",
 			sort : function() {
 				$(this).removeClass("ui-state-default");
@@ -87,7 +92,14 @@ function dragdropinit (){
 	<div id="cozinha">
 		<ol style="float: left; width: 30%">
 			<ins class="placeholder">Fila Cozinha</ins>
-			<li class="ui-state-highlight">${pedidosInit[0]}</li>
+			<c:forEach items="${pedidosInit}" var="pedidos">
+				<c:forEach items="${pedidos.itens}" var="item">
+					<li class="ui-state-highlight">
+						<c:out value="${item}" /> Mesa: 
+						<c:out value="${pedidos.mesa}" />
+						</li>
+				</c:forEach>
+			</c:forEach>
 		</ol>
 	</div>
 	<div id="garcom">

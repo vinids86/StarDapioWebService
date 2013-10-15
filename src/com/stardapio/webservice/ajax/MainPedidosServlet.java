@@ -3,6 +3,7 @@ package com.stardapio.webservice.ajax;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,13 +29,13 @@ public class MainPedidosServlet extends HttpServlet {
 		// long idRestaurant = (Long) session.getAttribute("idRestaurant");
 		long idRestaurant = 1;
 
-		List<Pedido> pedidosBanco = new PedidoModel().getPedidos(idRestaurant);		
+		Set<Pedido> pedidosBanco = new PedidoModel().getPedidos(idRestaurant);		
 		
-		session.setAttribute("pedidos", null);
+		session.setAttribute("pedidos", pedidosBanco);
 		req.setAttribute("pedidosInit", pedidosBanco);
 
 		for(Pedido p : pedidosBanco) {
-			p.setVisualizado(false);
+			p.setVisualizado(true);
 		}
 		
 		String path = "pedidos.jsp";
