@@ -87,6 +87,7 @@ function dragdropinit (){
 	<div id="cozinha">
 		<ol style="float: left; width: 30%">
 			<ins class="placeholder">Fila Cozinha</ins>
+			<li class="ui-state-highlight">${pedidosInit[0]}</li>
 		</ol>
 	</div>
 	<div id="garcom">

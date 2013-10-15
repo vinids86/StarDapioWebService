@@ -30,28 +30,33 @@ public class PedidoServlet extends HttpServlet {
 		// long idRestaurant = (Long) session.getAttribute("idRestaurant");
 		long idRestaurant = 1;
 		List<Pedido> pedidosSession;
-		List<Pedido> pedidosBanco = new PedidoModel().getPedidos(idRestaurant);
-		
-		if (session.getAttribute("pedidos").equals("vazio")) {
-			pedidosSession = new ArrayList<Pedido>();
+		if(session.getAttribute("pedidos") != null) {
+		 pedidosSession = (List<Pedido>) session
+				.getAttribute("pedidos");
 		} else {
-			pedidosSession = (List<Pedido>) session.getAttribute("pedidos");
+			pedidosSession = new ArrayList<Pedido>();
 		}
+		List<Pedido> pedidosBanco = new PedidoModel().getPedidos(idRestaurant);
 		List<Pedido> pedidosNovos = new ArrayList<Pedido>();
+		
+		for(Pedido p : pedidosBanco) {
+			p.setVisualizado(true);
+		}
 
-		for (Pedido p : pedidosSession) {
-			if (!pedidosSession.contains(p)) {
+		for (Pedido p : pedidosBanco) {
+			if ( (!pedidosSession.contains(p)) ) {
 				p.setVisualizado(true);
 				pedidosSession.add(p);
 				pedidosNovos.add(p);
 			}
 		}
 
+		session.setAttribute("pedidos", pedidosSession);
 		List<String> pedidosString = new ArrayList<String>();
 
-		for (Pedido p : pedidosBanco) {
+		for (Pedido p : pedidosNovos) {
 			for (Item i : p.getItens()) {
-				pedidosString.add(i.getName() + " " + p.getMesa());
+				pedidosString.add(i.getName() + " Mesa: " + p.getMesa());
 			}
 		}
 
