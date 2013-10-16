@@ -47,12 +47,9 @@ public class PedidoServlet extends HttpServlet {
 			}
 		}*/
 		
-		
-		
 		for(Pedido p : pedidosBanco) {
 			if((pedidosSession.add(p)) ) {
 				pedidosNovos.add(p);
-				p.setVisualizado(true);
 			}
 		}
 

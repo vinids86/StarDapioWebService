@@ -242,7 +242,7 @@ public class DAO {
 
 	public void adicionaPedido(Pedido pedido) {
 		String sql = "insert into pedido "
-				+ "(id_cliente, id_restaurant, item, mesa, visualizado)"
+				+ "(id_cliente, id_restaurant, item, mesa)"
 				+ "values (?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -253,7 +253,6 @@ public class DAO {
 				stmt.setLong(2, pedido.getIdRestaurant());
 				stmt.setInt(3, i.getIdItem());
 				stmt.setLong(4, pedido.getMesa());
-				stmt.setBoolean(5, false);
 			}
 			// Por execute dentro do laço
 			stmt.execute();
@@ -339,7 +338,7 @@ public class DAO {
 
 	public Set<Pedido> getPedidos(long idRestaurant) {
 		String sql = "select * from pedido " + "where id_restaurant = "
-				+ idRestaurant + " and visualizado = false";
+				+ idRestaurant;
 		try {
 			Set<Pedido> pedidos = new HashSet<Pedido>();
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
@@ -349,6 +348,7 @@ public class DAO {
 				Pedido pedido = new Pedido();
 				pedido.setIdCliente(rs.getString("id_cliente"));
 				pedido.setIdRestaurant(rs.getLong("id_restaurant"));
+				pedido.setIdPedido(rs.getLong("id_pedido"));
 				pedido.addItem(getItem(rs.getLong("item")));
 				pedido.setMesa(rs.getLong("mesa"));
 				pedidos.add(pedido);
@@ -360,20 +360,6 @@ public class DAO {
 			throw new RuntimeException(e);
 		}
 
-	}
-
-	public void setVisualizado(boolean b, long idRestaurant) {
-		String sql = "update pedido set visualizado = true where id_restaurant = "
-				+ idRestaurant;
-
-		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
-
-			stmt.execute();
-			stmt.close();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	/*

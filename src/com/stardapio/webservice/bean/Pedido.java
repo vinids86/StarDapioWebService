@@ -11,7 +11,6 @@ public class Pedido {
 	private String idCliente;
 	private long mesa;
 	private long idRestaurant;
-	private boolean visualizado;
 
 	public Pedido() {
 		itens = new ArrayList<Item>();
@@ -71,17 +70,14 @@ public class Pedido {
 		this.idRestaurant = idRestaurant;
 	}
 
-	public boolean isVisualizado() {
-		return visualizado;
-	}
-
-	public void setVisualizado(boolean visualizado) {
-		this.visualizado = visualizado;
-	}
-
 	@Override
 	public String toString() {
 		return itens.toString();
+	}
+	
+	@Override
+	public int hashCode() {
+		return (int) idPedido;
 	}
 
 	@Override

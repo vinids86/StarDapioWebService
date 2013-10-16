@@ -33,10 +33,6 @@ public class MainPedidosServlet extends HttpServlet {
 		
 		session.setAttribute("pedidos", pedidosBanco);
 		req.setAttribute("pedidosInit", pedidosBanco);
-
-		for(Pedido p : pedidosBanco) {
-			p.setVisualizado(true);
-		}
 		
 		String path = "pedidos.jsp";
 		RequestDispatcher view = req.getRequestDispatcher(path);
