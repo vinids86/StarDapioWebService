@@ -178,7 +178,7 @@ public class DAO {
 	}
 
 	public void inserirItem(Item item) {
-		String sql = "insert int item"
+		String sql = "insert into item"
 				+ "(name, price, description, urlImage, id_restaurant, id_type)"
 				+ "values (?, ?, ?, ?, ?, ?)";
 		try {
@@ -242,7 +242,7 @@ public class DAO {
 
 	public void adicionaPedido(Pedido pedido) {
 		String sql = "insert into pedido "
-				+ "(id_cliente, id_restaurant, item, mesa)"
+				+ "(id_cliente, id_restaurant, item, mesa, coluna)"
 				+ "values (?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -253,9 +253,11 @@ public class DAO {
 				stmt.setLong(2, pedido.getIdRestaurant());
 				stmt.setInt(3, i.getIdItem());
 				stmt.setLong(4, pedido.getMesa());
+				stmt.setInt(5, pedido.getColuna());
+				stmt.execute();
 			}
 			// Por execute dentro do laço
-			stmt.execute();
+			
 			stmt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -326,6 +328,7 @@ public class DAO {
 				pedido.setIdRestaurant(rs.getLong("id_restaurant"));
 				pedido.addItem(getItem(rs.getLong("item")));
 				pedido.setMesa(rs.getLong("mesa"));
+				pedido.setColuna(rs.getInt("coluna"));
 				pedidos.add(pedido);
 			}
 			rs.close();
@@ -351,6 +354,7 @@ public class DAO {
 				pedido.setIdPedido(rs.getLong("id_pedido"));
 				pedido.addItem(getItem(rs.getLong("item")));
 				pedido.setMesa(rs.getLong("mesa"));
+				pedido.setColuna(rs.getInt("coluna"));
 				pedidos.add(pedido);
 			}
 			rs.close();
@@ -360,6 +364,19 @@ public class DAO {
 			throw new RuntimeException(e);
 		}
 
+	}
+
+	public void atualizaColuna(int idPedido, int coluna) {
+		String sql = "update pedido set coluna = " + coluna + " where id_pedido = " + idPedido;
+		
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/*

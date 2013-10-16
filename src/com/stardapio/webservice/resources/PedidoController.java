@@ -3,6 +3,7 @@ package com.stardapio.webservice.resources;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -20,6 +21,15 @@ public class PedidoController {
 	@Consumes("application/json")
 	public String adiciona(Pedido pedido) {
 		new DAO().adicionaPedido(pedido);
+		return "ok";
+	}
+	
+	@PUT
+	@Path("/atualizaColuna/{id_pedido}/coluna/{coluna}")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public String atualizaColuna(@PathParam("id_pedido") int idPedido, @PathParam("coluna") int coluna) {
+		new DAO().atualizaColuna(idPedido, coluna);
 		return "ok";
 	}
 

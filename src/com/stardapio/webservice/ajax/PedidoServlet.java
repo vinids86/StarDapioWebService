@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.codehaus.jettison.json.JSONArray;
+import org.eclipse.jetty.util.log.Log;
 
 import com.stardapio.webservice.bean.Item;
 import com.stardapio.webservice.bean.Pedido;
@@ -28,7 +29,7 @@ public class PedidoServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
+
 		HttpSession session = req.getSession();
 		// long idRestaurant = (Long) session.getAttribute("idRestaurant");
 		long idRestaurant = 1;
@@ -38,17 +39,15 @@ public class PedidoServlet extends HttpServlet {
 
 		Set<Pedido> pedidosBanco = new PedidoModel().getPedidos(idRestaurant);
 		Set<Pedido> pedidosNovos = new HashSet<Pedido>();
-		
-		/*for (Pedido p : pedidosBanco) {
-			if ((!pedidosSession.contains(p)) && (!p.isVisualizado())) {
-				p.setVisualizado(true);
-				pedidosSession.add(p);
-				pedidosNovos.add(p);
-			}
-		}*/
-		
-		for(Pedido p : pedidosBanco) {
-			if((pedidosSession.add(p)) ) {
+
+		/*
+		 * for (Pedido p : pedidosBanco) { if ((!pedidosSession.contains(p)) &&
+		 * (!p.isVisualizado())) { p.setVisualizado(true);
+		 * pedidosSession.add(p); pedidosNovos.add(p); } }
+		 */
+
+		for (Pedido p : pedidosBanco) {
+			if ((pedidosSession.add(p))) {
 				pedidosNovos.add(p);
 			}
 		}
@@ -58,7 +57,9 @@ public class PedidoServlet extends HttpServlet {
 
 		for (Pedido p : pedidosNovos) {
 			for (Item i : p.getItens()) {
-				pedidosString.add(i.getName() + " Mesa: " + p.getMesa());
+				pedidosString.add(i.getName() + " Mesa: " + p.getMesa()
+						+ " Col" + p.getColuna() + " ID" + p.getIdPedido());
+				Log.info("ID_PEDIDO", p.getIdPedido());
 			}
 		}
 

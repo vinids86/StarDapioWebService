@@ -1,8 +1,6 @@
 package com.stardapio.webservice.ajax;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
@@ -12,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.stardapio.webservice.bean.Item;
 import com.stardapio.webservice.bean.Pedido;
 import com.stardapio.webservice.model.PedidoModel;
 

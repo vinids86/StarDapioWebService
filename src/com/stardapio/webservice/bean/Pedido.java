@@ -11,6 +11,7 @@ public class Pedido {
 	private String idCliente;
 	private long mesa;
 	private long idRestaurant;
+	private int Coluna;
 
 	public Pedido() {
 		itens = new ArrayList<Item>();
@@ -68,6 +69,14 @@ public class Pedido {
 
 	public void setIdRestaurant(long idRestaurant) {
 		this.idRestaurant = idRestaurant;
+	}
+	
+	public int getColuna() {
+		return Coluna;
+	}
+
+	public void setColuna(int coluna) {
+		Coluna = coluna;
 	}
 
 	@Override

@@ -24,7 +24,6 @@ public class Test {
 		pedido1.setIdRestaurant(1);
 		pedido1.setItens(itens);
 		pedido1.setMesa(1);
-		pedido1.setVisualizado(false);
 		
 		List<Pedido> pedidosBanco = new ArrayList<Pedido>();
 		pedidosBanco.add((pedido1));
@@ -35,13 +34,11 @@ public class Test {
 		pedido2.setIdRestaurant(1);
 		pedido2.setItens(itens);
 		pedido2.setMesa(1);
-		pedido2.setVisualizado(false);
 		pedidosSession.add(pedido2);
 		List<Pedido> pedidosNovos = new ArrayList<Pedido>();
 		
 		for(Pedido p : pedidosBanco) {
 			if(!pedidosSession.contains(p)) {
-				p.setVisualizado(true);
 				pedidosSession.add(p);
 				pedidosNovos.add(p);				
 			}

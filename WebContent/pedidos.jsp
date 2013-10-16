@@ -34,42 +34,62 @@ li {
 			cursor : "crosshair",
 			cancel : ".placeholder"
 		});
-		$("#garcom ol").droppable(
-				{
-					activeClass : "ui-state-default",
-					hoverClass : "ui-state-hover",
-					accept : "#cozinha li",
-					greedy : true,
-					drop : function(event, ui) {
-
-						$('<li class="ui-state-highlight"></li>').text(
-								ui.draggable.text()).appendTo(this);
-						ui.draggable.remove();
+		$("#garcom ol")
+				.droppable(
+						{
+							activeClass : "ui-state-default",
+							hoverClass : "ui-state-hover",
+							accept : "#cozinha li",
+							greedy : true,
+							drop : function(event, ui) {
+								var item = ui.draggable.text();
+								var id = item.match(/ID\d/g);
+								id = id[0].replace(/ID/g, "");
+								item = item.replace(/ID\d/g, "");
+								$
+										.ajax({
+											url : "http://localhost:8080/StarDapio3/rest/pedido/atualizaColuna/"
+													+ id + "/coluna/2",
+											type : "PUT"
+										});
+								$('<li class="ui-state-highlight"></li>').text(
+										ui.draggable.text()).appendTo(this);
+								ui.draggable.remove();
+							}
+						}).sortable({
+					items : "li:not(.placeholder)",
+					sort : function() {
+						$(this).removeClass("ui-state-default");
 					}
-				}).sortable({
-			items : "li:not(.placeholder)",
-			sort : function() {
-				$(this).removeClass("ui-state-default");
-			}
-		});
-		$("#caixa ol").droppable(
-				{
-					activeClass : "ui-state-default",
-					hoverClass : "ui-state-hover",
-					accept : "#garcom li",
-					greedy : true,
-					drop : function(event, ui) {
-
-						$('<li class="ui-state-highlight"></li>').text(
-								ui.draggable.text()).appendTo(this);
-						ui.draggable.remove();
+				});
+		$("#caixa ol")
+				.droppable(
+						{
+							activeClass : "ui-state-default",
+							hoverClass : "ui-state-hover",
+							accept : "#garcom li",
+							greedy : true,
+							drop : function(event, ui) {
+								var item = ui.draggable.text();
+								var id = item.match(/ID\d/g);
+								id = id[0].replace(/ID/g, "");
+								item = item.replace(/ID\d/g, "");
+								$
+										.ajax({
+											url : "http://localhost:8080/StarDapio3/rest/pedido/atualizaColuna/"
+													+ id + "/coluna/3",
+											type : "PUT"
+										});
+								$('<li class="ui-state-highlight"></li>').text(
+										ui.draggable.text()).appendTo(this);
+								ui.draggable.remove();
+							}
+						}).sortable({
+					items : "li:not(.placeholder)",
+					sort : function() {
+						$(this).removeClass("ui-state-default");
 					}
-				}).sortable({
-			items : "li:not(.placeholder)",
-			sort : function() {
-				$(this).removeClass("ui-state-default");
-			}
-		});
+				});
 	}
 </script>
 
@@ -79,9 +99,25 @@ li {
 			dragdropinit();
 			$.getJSON('pedidos', function(events) {
 				for ( var i in events) {
-					$('#cozinha ol').append(
-							'<li class="ui-state-highlight">' + events[i]
-									+ '</li>');
+					var col = events[i].match(/Col\d/g);
+					events[i] = events[i].replace(/Col\d/g, "");
+					switch (col[0]) {
+					case "Col1":
+						$('#cozinha ol').append(
+								'<li class="ui-state-highlight">' + events[i]
+										+ '</li>');
+						break;
+					case "Col2":
+						$('#garcom ol').append(
+								'<li class="ui-state-highlight">' + events[i]
+										+ '</li>');
+						break;
+					case "Col3":
+						$('#caixa ol').append(
+								'<li class="ui-state-highlight">' + events[i]
+										+ '</li>');
+						break;
+					}
 				}
 			});
 		}, 6000);
@@ -93,23 +129,43 @@ li {
 		<ol style="float: left; width: 30%">
 			<ins class="placeholder">Fila Cozinha</ins>
 			<c:forEach items="${pedidosInit}" var="pedidos">
-				<c:forEach items="${pedidos.itens}" var="item">
-					<li class="ui-state-highlight">
-						<c:out value="${item}" /> Mesa: 
-						<c:out value="${pedidos.mesa}" />
-						</li>
-				</c:forEach>
+				<c:if test="${pedidos.coluna == 1}">
+					<c:forEach items="${pedidos.itens}" var="item">
+						<li class="ui-state-highlight"><c:out value="${item}" />
+							Mesa: <c:out value="${pedidos.mesa}" /> Col<c:out
+								value="${pedidos.coluna}" /> ID<c:out value="${pedidos.idPedido}" /></li>
+					</c:forEach>
+				</c:if>
 			</c:forEach>
 		</ol>
 	</div>
 	<div id="garcom">
 		<ol style="float: left; width: 30%">
 			<ins class="placeholder">Fila Garçom</ins>
+			<c:forEach items="${pedidosInit}" var="pedidos">
+				<c:if test="${pedidos.coluna == 2}">
+					<c:forEach items="${pedidos.itens}" var="item">
+						<li class="ui-state-highlight"><c:out value="${item}" />
+							Mesa: <c:out value="${pedidos.mesa}" /> Col<c:out
+								value="${pedidos.coluna}" /> ID<c:out value="${pedidos.idPedido}" /></li>
+					</c:forEach>
+				</c:if>
+			</c:forEach>
 		</ol>
 	</div>
 	<div id="caixa">
 		<ol style="float: left; width: 30%" class="sortable-class">
 			<ins class="placeholder">Fila Caixa</ins>
+			<c:forEach items="${pedidosInit}" var="pedidos">
+				<c:if test="${pedidos.coluna == 3}">
+					<c:forEach items="${pedidos.itens}" var="item">
+						<li class="ui-state-highlight"><c:out value="${item}" />
+							Mesa: <c:out value="${pedidos.mesa}" /> Col<c:out
+								value="${pedidos.coluna}" /> ID<c:out
+								value="${pedidos.idPedido}" /></li>
+					</c:forEach>
+				</c:if>
+			</c:forEach>
 		</ol>
 	</div>
 </body>
