@@ -34,62 +34,54 @@ li {
 			cursor : "crosshair",
 			cancel : ".placeholder"
 		});
-		$("#garcom ol")
-				.droppable(
-						{
-							activeClass : "ui-state-default",
-							hoverClass : "ui-state-hover",
-							accept : "#cozinha li",
-							greedy : true,
-							drop : function(event, ui) {
-								var item = ui.draggable.text();
-								var id = item.match(/ID\d/g);
-								id = id[0].replace(/ID/g, "");
-								item = item.replace(/ID\d/g, "");
-								$
-										.ajax({
-											url : "http://localhost:8080/StarDapio3/rest/pedido/atualizaColuna/"
-													+ id + "/coluna/2",
-											type : "PUT"
-										});
-								$('<li class="ui-state-highlight"></li>').text(
-										ui.draggable.text()).appendTo(this);
-								ui.draggable.remove();
-							}
-						}).sortable({
-					items : "li:not(.placeholder)",
-					sort : function() {
-						$(this).removeClass("ui-state-default");
+		$("#garcom ol").droppable(
+				{
+					activeClass : "ui-state-default",
+					hoverClass : "ui-state-hover",
+					accept : "#cozinha li",
+					greedy : true,
+					drop : function(event, ui) {
+						var id = ui.draggable.text().match(/ID\d/g);
+						id = id[0].replace(/ID/g, "");
+						$.ajax({
+							url : "rest/pedido/atualizaColuna/" + id
+									+ "/coluna/2",
+							type : "PUT"
+						});
+						$('<li class="ui-state-highlight"></li>').text(
+								ui.draggable.text()).appendTo(this);
+						ui.draggable.remove();
 					}
-				});
-		$("#caixa ol")
-				.droppable(
-						{
-							activeClass : "ui-state-default",
-							hoverClass : "ui-state-hover",
-							accept : "#garcom li",
-							greedy : true,
-							drop : function(event, ui) {
-								var item = ui.draggable.text();
-								var id = item.match(/ID\d/g);
-								id = id[0].replace(/ID/g, "");
-								item = item.replace(/ID\d/g, "");
-								$
-										.ajax({
-											url : "http://localhost:8080/StarDapio3/rest/pedido/atualizaColuna/"
-													+ id + "/coluna/3",
-											type : "PUT"
-										});
-								$('<li class="ui-state-highlight"></li>').text(
-										ui.draggable.text()).appendTo(this);
-								ui.draggable.remove();
-							}
-						}).sortable({
-					items : "li:not(.placeholder)",
-					sort : function() {
-						$(this).removeClass("ui-state-default");
+				}).sortable({
+			items : "li:not(.placeholder)",
+			sort : function() {
+				$(this).removeClass("ui-state-default");
+			}
+		});
+		$("#caixa ol").droppable(
+				{
+					activeClass : "ui-state-default",
+					hoverClass : "ui-state-hover",
+					accept : "#garcom li",
+					greedy : true,
+					drop : function(event, ui) {
+						var id = ui.draggable.text().match(/ID\d/g);
+						id = id[0].replace(/ID/g, "");
+						$.ajax({
+							url : "rest/pedido/atualizaColuna/" + id
+									+ "/coluna/3",
+							type : "PUT"
+						});
+						$('<li class="ui-state-highlight"></li>').text(
+								ui.draggable.text()).appendTo(this);
+						ui.draggable.remove();
 					}
-				});
+				}).sortable({
+			items : "li:not(.placeholder)",
+			sort : function() {
+				$(this).removeClass("ui-state-default");
+			}
+		});
 	}
 </script>
 
@@ -100,7 +92,6 @@ li {
 			$.getJSON('pedidos', function(events) {
 				for ( var i in events) {
 					var col = events[i].match(/Col\d/g);
-					events[i] = events[i].replace(/Col\d/g, "");
 					switch (col[0]) {
 					case "Col1":
 						$('#cozinha ol').append(
@@ -133,7 +124,8 @@ li {
 					<c:forEach items="${pedidos.itens}" var="item">
 						<li class="ui-state-highlight"><c:out value="${item}" />
 							Mesa: <c:out value="${pedidos.mesa}" /> Col<c:out
-								value="${pedidos.coluna}" /> ID<c:out value="${pedidos.idPedido}" /></li>
+								value="${pedidos.coluna}" /> ID<c:out
+								value="${pedidos.idPedido}" /></li>
 					</c:forEach>
 				</c:if>
 			</c:forEach>
@@ -147,7 +139,8 @@ li {
 					<c:forEach items="${pedidos.itens}" var="item">
 						<li class="ui-state-highlight"><c:out value="${item}" />
 							Mesa: <c:out value="${pedidos.mesa}" /> Col<c:out
-								value="${pedidos.coluna}" /> ID<c:out value="${pedidos.idPedido}" /></li>
+								value="${pedidos.coluna}" /> ID<c:out
+								value="${pedidos.idPedido}" /></li>
 					</c:forEach>
 				</c:if>
 			</c:forEach>

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.codehaus.jettison.json.JSONArray;
-import org.eclipse.jetty.util.log.Log;
 
 import com.stardapio.webservice.bean.Item;
 import com.stardapio.webservice.bean.Pedido;
@@ -52,14 +51,15 @@ public class PedidoServlet extends HttpServlet {
 			}
 		}
 
-		session.setAttribute("pedidos", pedidosSession);
+		synchronized (session) {
+			session.setAttribute("pedidos", pedidosSession);
+		}
 		List<String> pedidosString = new ArrayList<String>();
 
 		for (Pedido p : pedidosNovos) {
 			for (Item i : p.getItens()) {
 				pedidosString.add(i.getName() + " Mesa: " + p.getMesa()
 						+ " Col" + p.getColuna() + " ID" + p.getIdPedido());
-				Log.info("ID_PEDIDO", p.getIdPedido());
 			}
 		}
 

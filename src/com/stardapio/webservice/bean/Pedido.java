@@ -11,10 +11,11 @@ public class Pedido {
 	private String idCliente;
 	private long mesa;
 	private long idRestaurant;
-	private int Coluna;
+	private int coluna;
 
 	public Pedido() {
 		itens = new ArrayList<Item>();
+		coluna = 1;
 	}
 
 	public Pedido(String idCliente, long idRestaurante, String mesa) {
@@ -72,11 +73,11 @@ public class Pedido {
 	}
 	
 	public int getColuna() {
-		return Coluna;
+		return coluna;
 	}
 
 	public void setColuna(int coluna) {
-		Coluna = coluna;
+		this.coluna = coluna;
 	}
 
 	@Override
