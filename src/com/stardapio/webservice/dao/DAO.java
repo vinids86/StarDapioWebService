@@ -121,7 +121,7 @@ public class DAO {
 		}
 	}
 
-	public List<Item> getMenu(int idRestaurante) {
+	public List<Item> getMenu(long idRestaurante) {
 		String sql = "select * from item " + "where id_restaurant = "
 				+ idRestaurante;
 		try {

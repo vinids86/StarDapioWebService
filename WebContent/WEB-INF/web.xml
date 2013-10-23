@@ -49,6 +49,16 @@
 		<url-pattern>/pedido</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>centralNegocios</servlet-name>
+		<servlet-class>com.stardapio.webservice.ajax.CentralNegociosServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>centralNegocios</servlet-name>
+		<url-pattern>/centralNegocios</url-pattern>
+	</servlet-mapping>
+
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
